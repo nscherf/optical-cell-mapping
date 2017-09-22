@@ -16,5 +16,6 @@ This repository contains the scripts to compute the data analysis presented in *
 - **src/** contains the actual function definitions and notebooks (in Julia and Mathematica). 
 	- *analyse-conduction-pattern.nb*: This Mathematica notebook was used to analyse the cellular activation patterns.
 	- *analyse-conduction-pattern.cdf*: A computable document format version that can be used without a Mathematica license using the [Wolfram CDF Player](https://www.wolfram.com/cdf-player/)
-	- *cell-detection-and-signal-extraction.jl*: An experimental Julia implementation of the grayscale blob detection. This file also contains the functions needed to extract the GCaMP signal from the detected cell regions.
-	- 
+	- *functions.m*: contains the custom function definitions written for the analysis pipelines (plain text format).
+	- *cell-detection-and-signal-extraction.jl*: An experimental Julia implementation of the grayscale blob detection. This file also contains the functions needed to extract the GCaMP signal from the detected cell regions. This code is tested with Julia version 0.4 - 
+	- *cell-detection-and-signal-extraction-pipeline.ipynb*: A demonstration notebook showing how to use the Julia code. 
