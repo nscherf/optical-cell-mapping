@@ -1,6 +1,8 @@
 # Single Cell Optical Mapping of Cardiac Activation
 
-This repository contains the scripts to compute the data analysis presented in *Cell-accurate optical mapping across the entire developing heart*.
+![](./pics/colored-heart.png)
+
+This repository contains the scripts to compute the data analysis presented in *Cell-accurate optical mapping across the entire developing heart*. The preprint version can be found on [BioRxiv](https://www.biorxiv.org/content/early/2017/05/27/143057).
 
 ## Structure of the repository
 
