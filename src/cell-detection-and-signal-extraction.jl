@@ -1,3 +1,4 @@
+module CellAnalyzer
 
 using ImageView
 using Images
@@ -5,6 +6,7 @@ using ColorTypes
 using FixedPointNumbers
 using HDF5
 
+export myImgConvert, myDoG, myNormalize, myInvert, myShow, myNaiveMaxDetect, myMaxProject, myMeanImageFromFiles, testfun, mySegmentation, mySizeFilter, processFrame, extractMeanSignal, exportSignal, extractSignal, myStack2HDF5
 
 function myImgConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3,Array{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3}})
 
@@ -306,18 +308,17 @@ end
 end
 
 
-#How to use these functions:
 
+#synopsis
 #using Images, ImageView, HDF5
-
-# to analyze a synchronized video (ch2 - nuclei, ch1 - Ca signal):
+#push!(LOAD_PATH,"/Users/scherf/dev/myJuliaPackages/")
+#using myImageAnalyzer #doesn't yet work as intended
 #res = mySegmentation("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch2_VSilent/", t=0.12);
 #res2 = mySizeFilter(res);
 #test = extractSignals("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch1_VSilent/", res2);
 #myStack2HDF5(res2, "/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-filtered.h5")
 #exportSignal("/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-signal.h5", test)
-
-# to extract the Ca signals if the cell detection has been manually corrected:
+#change DoG to rmin = 3, rmax = 6
 #limg = imread("/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-manual-labels.tif")
 #limg = myLabelConvert(limg);
 #test = extractSignals("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch1_VSilent/", limg);
