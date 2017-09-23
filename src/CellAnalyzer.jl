@@ -195,20 +195,26 @@ function myMaxProject(img::Array{Float64,3})
     mmax
 end
 
-function myMeanImageFromFiles(fileNames::Array{ASCIIString,1})
-    img0 = ImageView.imread(fileNames[1]);
+function myMeanImageFromFiles(fileNames::Array{String,1})
+    img0 = ImageView.load(fileNames[1]);
     img0dat = myImgConvert(img0);
     nx,ny,nz = size(img0dat);
     meanimg = img0dat * 1/length(fileNames)
 
     for f in fileNames[2,:]
-            img = ImageView.imread(f);
+            img = ImageView.load(f);
             imgdat = myImgConvert(img);
             meanimg = meanimg + imgdat * 1/length(fileNames)
     end
     meanimg
  end
 
+function myMeanImageFromFiles(fileNames::String)
+    img0= ImageView.load(fileNames);
+    img0dat=myImgConvert(img0);
+    # nx, ny, nz = size(img0dat);
+    img0dat
+end
 
 function myImagePreprocess(dir)
     #fnames = map(x->string(dir, x), readdir(dir)[2:end])
@@ -269,7 +275,7 @@ function extractMeanSignal(img::Array{Float64,3}, label::Array{Float64,3})
 end
 
 function processFrame(fname::AbstractString, label::Array{Float64,3})
-    sig = Images.imread(fname);
+    sig = Images.load(fname);
     sig = myImgConvert(sig);
     res = extractMeanSignal(sig, label);
 end
