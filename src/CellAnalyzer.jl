@@ -8,8 +8,8 @@ using HDF5
 
 export myImgConvert, myDoG, myNormalize, myInvert, myShow, myNaiveMaxDetect, myMaxProject, myMeanImageFromFiles, testfun, mySegmentation, mySizeFilter, processFrame, extractMeanSignal, exportSignal, extractSignal, myStack2HDF5
 
-function myImgConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3,Array{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3}})
-
+#function myImgConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3,Array{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3}})
+function myImgConvert(img)
     nx, ny, nz = size(img)
     dat = data(img)
     mydat = zeros(Float64, (nx,ny,nz))
@@ -23,8 +23,8 @@ function myImgConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.Ufixed
     mydat
 end
 
-function myLabelConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3,Array{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3}})
-
+#function myLabelConvert(img::Images.Image{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3,Array{ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt16,16}},3}})
+function myLabelConvert(img)
     nx, ny, nz = size(img)
     dat = raw(img)
     mydat = zeros(Float64, (nx,ny,nz))
@@ -311,8 +311,8 @@ end
 
 #synopsis
 #using Images, ImageView, HDF5
-#push!(LOAD_PATH,"/Users/scherf/dev/myJuliaPackages/")
-#using myImageAnalyzer #doesn't yet work as intended
+#push!(LOAD_PATH,"path_to_this_jl_file")
+#using CellAnalyzer #doesn't yet work as intended
 #res = mySegmentation("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch2_VSilent/", t=0.12);
 #res2 = mySizeFilter(res);
 #test = extractSignals("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch1_VSilent/", res2);
