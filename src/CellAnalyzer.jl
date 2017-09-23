@@ -42,8 +42,8 @@ end
 function myDoG(img::Array{Float64,3};dx=0.46, dy=0.46, dz = 1., rmin = 5,rmax = 10)
     println("compute scale-normalized DoG")
     scaling = dx / dz
-    large = imfilter_gaussian(img, [rmax, rmax, rmax * scaling])
-    small = imfilter_gaussian(img, [rmin, rmin, rmin * scaling])
+    large = imfilter(img, Kernel.gaussian([rmax, rmax, rmax * scaling]))
+    small = imfilter(img, Kernel.gaussian([rmin, rmin, rmin * scaling]))
 
     (rmin/(rmax-rmin))*(large - small)
 end
@@ -209,21 +209,21 @@ function myMeanImageFromFiles(fileNames::Array{String,1})
     meanimg
  end
 
-function myMeanImageFromFiles(fileNames::String)
-    img0= ImageView.load(fileNames);
+function myImageLoad(fileName::String)
+    img0 = load(fileName);
     img0dat=myImgConvert(img0);
     # nx, ny, nz = size(img0dat);
     img0dat
 end
 
-function myImagePreprocess(dir)
+function myImagePreprocess(fname)
     #fnames = map(x->string(dir, x), readdir(dir)[2:end])
-    fnames = map(x->string(dir,x), filter(x->contains(x,".tif"), readdir(dir)));
-    println(fnames)
-    mimg = myMeanImageFromFiles(fnames);
+    #fnames = map(x->string(dir,x), filter(x->contains(x,".tif"), readdir(dir)));
+    #println(fnames)
+    mimg = myImageLoad(fname);
     nimg = myNormalize(mimg);
-    bg = Images.imfilter_gaussian(nimg, [50,50,20])
-    fg = Images.imfilter_gaussian(nimg, [2, 2, 1])
+    bg = Images.imfilter(nimg, Kernel.gaussian([50,50,20]))
+    fg = Images.imfilter(nimg, Kernel.gaussian([2, 2, 1]))
     img = fg - bg;
     myNormalize(img)
 end
@@ -312,20 +312,3 @@ function exportSignal(fname::AbstractString, signalDict::Dict)
 end
 
 end
-
-
-
-#synopsis
-#using Images, ImageView, HDF5
-#push!(LOAD_PATH,"path_to_this_jl_file")
-#using CellAnalyzer #doesn't yet work as intended
-#res = mySegmentation("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch2_VSilent/", t=0.12);
-#res2 = mySizeFilter(res);
-#test = extractSignals("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch1_VSilent/", res2);
-#myStack2HDF5(res2, "/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-filtered.h5")
-#exportSignal("/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-signal.h5", test)
-#change DoG to rmin = 3, rmax = 6
-#limg = imread("/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-manual-labels.tif")
-#limg = myLabelConvert(limg);
-#test = extractSignals("/Users/scherf/Documents/heart_new/data/150204-e004-tp1/tp00000_ch1_VSilent/", limg);
-#exportSignal("/Users/scherf/Documents/heart_new/segmentation/150204-e004-36-signal-curated.h5", test)
